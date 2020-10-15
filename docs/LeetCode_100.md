@@ -2,7 +2,7 @@
 >
 > 题解来源：个人解法和题解(对他人的题解可能没有标明)
 
-# [78.子集](https://leetcode-cn.com/problems/subsets/)
+# 78.[子集](https://leetcode-cn.com/problems/subsets/)
 
 ## 迭代法
 
@@ -54,7 +54,7 @@ class Solution:
         return ans
 ```
 
-# [617. 合并二叉树](https://leetcode-cn.com/problems/merge-two-binary-trees/)
+# 617. [合并二叉树](https://leetcode-cn.com/problems/merge-two-binary-trees/)
 
 ## 递归
 
@@ -87,7 +87,7 @@ class Solution:
         return return_node   
 ```
 
-# [461. 汉明距离](https://leetcode-cn.com/problems/hamming-distance/)
+# 461. [汉明距离](https://leetcode-cn.com/problems/hamming-distance/)
 
 ## 异或
 
@@ -117,7 +117,7 @@ class Solution:
 
 
 
-# [226. 翻转二叉树](https://leetcode-cn.com/problems/invert-binary-tree/)
+# 226. [翻转二叉树](https://leetcode-cn.com/problems/invert-binary-tree/)
 
 ## 递归法
 
@@ -132,7 +132,7 @@ class Solution:
 
 节点为空或者没有子节点，直接返回该节点（因为不需要翻转子节点）；若有子节点，则对子节点分别翻转，之后交换两个节点即可（利用解包操作）
 
-# [46. 全排列](https://leetcode-cn.com/problems/permutations/)
+# 46. [全排列](https://leetcode-cn.com/problems/permutations/)
 
 ## 库函数法
 
@@ -171,7 +171,7 @@ class Solution:
 
 
 
-# [22. 括号生成](https://leetcode-cn.com/problems/generate-parentheses/)
+# 22. [括号生成](https://leetcode-cn.com/problems/generate-parentheses/)
 
 ## 回溯法
 
@@ -210,7 +210,7 @@ class Solution:
     
     ![](./images/lc22.png)
 
-# [338. 比特位计数](https://leetcode-cn.com/problems/counting-bits/)
+# 338. [比特位计数](https://leetcode-cn.com/problems/counting-bits/)
 
 ## 库函数法
 
@@ -248,7 +248,7 @@ class Solution:
 
 
 
-# [104. 二叉树的最大深度](https://leetcode-cn.com/problems/maximum-depth-of-binary-tree/)
+# 104. [二叉树的最大深度](https://leetcode-cn.com/problems/maximum-depth-of-binary-tree/)
 
 ## 递归
 
@@ -289,7 +289,7 @@ class Solution:
 
 
 
-# [94. 二叉树的中序遍历](https://leetcode-cn.com/problems/binary-tree-inorder-traversal/)
+# 94. [二叉树的中序遍历](https://leetcode-cn.com/problems/binary-tree-inorder-traversal/)
 
 ## 递归
 
