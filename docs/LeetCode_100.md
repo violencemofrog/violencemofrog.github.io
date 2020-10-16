@@ -388,3 +388,26 @@ class Solution:
 * 如果遇到的节点为白色，则将其标记为灰色，然后将其右子节点、自身、左子节点依次入栈
 * 如果遇到的节点为灰色，则将节点的值输出
 * 更换`color == WHITE`判断后的如栈顺序，可以完成前，中，后序遍历
+
+# 39. 组合总和
+[题目](https://leetcode-cn.com/problems/combination-sum/)
+
+## 回溯法
+```python
+class Solution:
+    def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
+        res=[]
+        candidates_copy=sorted(candidates)
+        def find(ind,nums,tar):
+            for i in range(ind,len(candidates)):
+                n=candidates_copy[i]
+                if tar==n:
+                    res.append(nums+[n])
+                if tar>n:
+                    find(i,nums+[n],tar-n)
+                if tar<n:
+                    return
+        find(0,[],target)
+        return res
+```
+先对原数组排序；原数组的每个元素都进行一次搜索，每个元素会产生新的target，在以新的target重复上述操作
