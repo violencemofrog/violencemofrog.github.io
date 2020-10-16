@@ -214,7 +214,7 @@ class Solution:
 
     其递归调用结构如下：
     
-    ![](./images/lc22.png)
+    ![](./images_lc/lc22.png)
 
 # 338. 比特位计数
 [题目](https://leetcode-cn.com/problems/counting-bits/)
