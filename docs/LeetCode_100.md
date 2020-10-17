@@ -1,6 +1,6 @@
 > 题目来源：[LeetCode Hot 100](https://leetcode-cn.com/problemset/leetcode-hot-100/)
 >
-> 题解来源：个人解法和题解(对他人的题解可能没有标明)
+> 题解来源：个人解法和LeetCode题解(没有对他人的题解注明，抱歉)
 
 # 78.子集
 [题目](https://leetcode-cn.com/problems/subsets/)
@@ -15,7 +15,7 @@ class Solution:
             ans+=[[x]+i for i in ans]
         return ans
 ```
-
+对于`nums=[1,2,3]`
 图示如下：
 
 ``` 
@@ -214,7 +214,7 @@ class Solution:
 
     其递归调用结构如下：
     
-    ![](./images_lc/lc22.png)
+    ![](./images/lc22.png)
 
 # 338. 比特位计数
 [题目](https://leetcode-cn.com/problems/counting-bits/)
@@ -410,4 +410,65 @@ class Solution:
         find(0,[],target)
         return res
 ```
-先对原数组排序；原数组的每个元素都进行一次搜索，每个元素会产生新的target，在以新的target重复上述操作
+先对原数组排序，方便接下来的组合操作
+
+从原数组的第一个元素开始添加，如果添加后仍为达到target，则继续对每个元素再进行添加
+
+当第一个元素执行完上操作，对下一个元素执行；由于数组是排序过的，这种搜索方式可以避免重复的组合
+
+# 114. 二叉树展开为链表
+
+[题目](https://leetcode-cn.com/problems/flatten-binary-tree-to-linked-list/)
+
+## 前序遍历储存位置
+
+```python
+class Solution:
+    def flatten(self, root: TreeNode) -> None:
+        """
+        Do not return anything, modify root in-place instead.
+        """
+        l=list()
+        def fun(node: TreeNode)->None:
+            if not node:
+                return
+            else:
+                l.append(node)
+                fun(node.left)
+                fun(node.right)
+        fun(root)
+
+        r=root
+        for i in range(1,len(l)):
+            r.left=None
+            r.right=l[i]
+            r=l[i]    
+```
+
+先用前序遍历存储每个树节点
+
+遍历存储的列表，使每一个节点的右子节点是下一个元素
+
+同时要注意把左子节点设置为`None`
+
+## 寻找前驱法
+
+```python
+class Solution:
+    def flatten(self, root: TreeNode) -> None:
+        curr=root
+        while curr:
+            if curr.left:
+                predecessor=nxt=curr.left
+                while predecessor.right:
+                    predecessor=predecessor.right
+                predecessor.right = curr.right
+                curr.left = None
+                curr.right = nxt
+            curr=curr.right
+```
+
+ 对于每个节点：
+
+* 不存在左子节点，则说明该节点和其右子节点是按照链表的顺序排列的，继续判断右子节点
+* 存在左子节点，需要把右子节点挂到前驱节点（即该节点按前序遍历顺序时的上一个节点），同时使左子节点成为右子节点（注意最后使左子节点为空）

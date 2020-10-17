@@ -1,6 +1,5 @@
 # Chou’s Blog
-* 记录学习笔记和心得
+* Coding, Reading and Thinking
 
 [GitHub](<https://github.com/violencemofrog>)
-[开始阅读](./README.md)
-
+[Start](./README.md)

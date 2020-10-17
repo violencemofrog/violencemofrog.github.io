@@ -1,3 +1,3 @@
 * [About](./README.md)
-* [Contents](./contents.md)
-* [LeetCode笔记](./LeetCode_100.md)
+* [Blog](./contents.md)
+* [LeetCode](./LeetCode_100.md)
