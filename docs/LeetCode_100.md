@@ -363,23 +363,6 @@ class Solution:
             else:
                 res.append(node.val)
         return res
-    
-    
-    class Solution:
-    def inorderTraversal(self, root: TreeNode) -> List[int]:
-        WHITE, GRAY = 0, 1
-        res = []
-        stack = [(WHITE, root)]
-        while stack:
-            color, node = stack.pop()
-            if node is None: continue
-            if color == WHITE:
-                stack.append((WHITE, node.right))
-                stack.append((GRAY, node))
-                stack.append((WHITE, node.left))
-            else:
-                res.append(node.val)
-        return res
 ```
 
 做法来自[题解](https://leetcode-cn.com/problems/binary-tree-inorder-traversal/solution/yan-se-biao-ji-fa-yi-chong-tong-yong-qie-jian-ming/)：
@@ -472,3 +455,45 @@ class Solution:
 
 * 不存在左子节点，则说明该节点和其右子节点是按照链表的顺序排列的，继续判断右子节点
 * 存在左子节点，需要把右子节点挂到前驱节点（即该节点按前序遍历顺序时的上一个节点），同时使左子节点成为右子节点（注意最后使左子节点为空）
+
+
+# 238. 除自身以外数组的乘积
+[题目](https://leetcode-cn.com/problems/product-of-array-except-self/)
+
+## 左右列表乘积
+```python
+class Solution:
+    def productExceptSelf(self, nums: List[int]) -> List[int]:
+        l=len(nums)
+        L,R,res=[0]*l,[0]*l,[0]*l
+
+        L[0]=1
+        for i in range(1,l):
+            L[i]=L[i-1]*nums[i-1]
+
+        R[l-1]=1
+        for i in reversed(range(l-1)):
+            R[i]=nums[i+1]*R[i+1]
+
+        for i in range(l):
+            res[i]=L[i]*R[i]
+
+        return res
+```
+解法来自[官方题解](https://leetcode-cn.com/problems/product-of-array-except-self/solution/chu-zi-shen-yi-wai-shu-zu-de-cheng-ji-by-leetcode-/)；
+不能先累乘再做除法，因为可能包含0；同时先剔除每个元素，在对其他元素求积的话，会超时；这里选择用空间换时间的办法
+
+对于每个元素的除自身以外的乘积，其实相当于元素左边的数组的累乘乘以元素右边数组的累乘；如果先储存了每个元素左右数组的类乘，就可以很快算出结果
+
+元素左右数组的累乘是很好算的：
+
+* 元素左边数组的累乘：对于第一个元素，规定其值1（因为其左边无元素）；对于第n个元素，其值为上一个累乘的结果乘以原数组中对应的元素，即`L[i]=L[i-1]*nums[i-1]`
+* 同理，对于元素右边数组的累乘：最后一个元素，规定其值为1；对于第n个元素，其值`R[i]=R[i+1]*nums[i+1]`
+
+
+示例如下：
+```
+nums [1,2,3,4]
+  L  [1,1,2,6]
+  R  [24,12,4,1]
+```
