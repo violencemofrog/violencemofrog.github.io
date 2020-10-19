@@ -497,3 +497,67 @@ nums [1,2,3,4]
   L  [1,1,2,6]
   R  [24,12,4,1]
 ```
+
+# 206. 反转链表
+[题目](https://leetcode-cn.com/problems/reverse-linked-list/)
+## 迭代反转（返回新链表）
+```python
+class Solution:
+    def reverseList(self, head: ListNode) -> ListNode:
+        res=None
+
+        node=head
+        next_node=None
+        while node:
+            if not res:
+                res=ListNode(node.val)
+            else:
+                res,res.next=ListNode(node.val),res
+            node=node.next
+        return res
+```
+从头遍历该链表，采用前插法建立一个新链表即可
+
+## 原地反转
+```python
+class Solution:
+    def reverseList(self, head: ListNode) -> ListNode:
+        helper=ListNode(0)
+        
+        cur_node=head
+        next_node=None
+        while cur_node:
+            next_node=cur_node.next
+            cur_node.next=helper.next
+            helper.next=cur_node
+            cur_node=next_node
+        return helper.next
+```
+类似上一个方法；这里创建一个头节点`helper`帮助反转；遍历链表，同时将每个节点插入至`helper`后即可
+
+## 递归
+```python
+class Solution:
+    def reverseList(self, head: ListNode) -> ListNode:
+        if not head or not head.next:
+            return head
+        newhead = self.reverseList(head.next)
+        head.next.next = head
+        head.next = None
+        return newhead
+```
+来自[题解](https://leetcode-cn.com/problems/reverse-linked-list/solution/shuang-zhi-zhen-di-gui-by-elevenxx/)
+，这里以一个简单的实例分析递归：
+
+```
+1 -> 2 -> 3 -> 4 -> None
+````
+
+对1后的节点进行反转后：
+
+```
+1 -> 2 <- 3 <- 4 <- newhead
+```
+
+可见，此时需要将1的下一个节点（2）的下一个设置为其本身（即1本身），所以需要`head.next.next=head`
+，同时需注意将1的下一个节点设置为`None`
