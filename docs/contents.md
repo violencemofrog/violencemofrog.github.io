@@ -16,3 +16,6 @@
 
 # SQL
 * [SQL学习笔记](./Blog/SQL学习笔记.md)
+
+# Numpy
+* [通过numpy.newaxis添加数组维度](./Blog/通过numpy.newaxis添加数组维度.md)

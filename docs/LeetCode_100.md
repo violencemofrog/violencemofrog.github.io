@@ -551,7 +551,7 @@ class Solution:
 
 ```
 1 -> 2 -> 3 -> 4 -> None
-````
+```
 
 对1后的节点进行反转后：
 
@@ -561,3 +561,54 @@ class Solution:
 
 可见，此时需要将1的下一个节点（2）的下一个设置为其本身（即1本身），所以需要`head.next.next=head`
 ，同时需注意将1的下一个节点设置为`None`
+
+# 136. 只出现一次的数字
+[题解](https://leetcode-cn.com/problems/single-number/)
+
+## `list.count`方法
+```python
+class Solution:
+    def singleNumber(self, nums: List[int]) -> int:
+        for i in nums:
+            if nums.count(i)==1:
+                return i
+```
+由题易知必存在唯一元素，所以通过`list.count`方法遍历寻找只存在一次的元素返回即可
+
+## 利用集合
+```python
+class Solution:
+    def singleNumber(self, nums: List[int]) -> int:
+        return sum(set(nums))*2-sum(nums)
+```
+题目中的列表中的数字要么出现一次，要么出现两次，所以先把列表转化为集合，然后求和乘2,再减去原列表的元素和，结果就是那个唯一的元素
+
+## 利用字典
+```python
+class Solution:
+    def singleNumber(self, nums: List[int]) -> int:
+        d={}
+        for i in nums:
+            if d. __contains__(str(i)):
+                d[str(i)]+=1
+            else:
+                d[str(i)]=1
+        for i,j in d.items():
+            if j==1:
+                return int(i)
+```
+字典存储每个数字出现的次数，最后输出值为1的键即可
+
+## 位运算
+```python
+class Solution:
+    def singleNumber(self, nums: List[int]) -> int:
+        return reduce(lambda x, y: x ^ y, nums)
+```
+可以使用异或运算：
+
+* 任何数和0做异或运算，结果仍然是原来的数
+* 任何数和其自身做异或运算，结果是0
+* 异或运算满足交换律和结合律
+
+对数组中所有元素进行异或运算，结果就是那个唯一的元素
