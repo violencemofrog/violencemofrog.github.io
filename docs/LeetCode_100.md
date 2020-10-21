@@ -210,11 +210,9 @@ class Solution:
     * 如果两括号数目和为2n，则为结果
     * 如果数目还不够，则继续增加括号，这回产生加左和右两种结果的递归调用
 
-    
+其递归调用结构如下：
 
-    其递归调用结构如下：
-    
-    ![](./images/lc22.png)
+![](./images/lc22.png)
 
 # 338. 比特位计数
 [题目](https://leetcode-cn.com/problems/counting-bits/)
@@ -232,12 +230,8 @@ class Solution:
 ## 动态规划
 
 二进制中1的个数规律如下：
-$$
-n(i)=\begin{cases}
-n(i-1)+1 \ \ i为奇数 \\
-n(\frac{i}{2}) \ \  i为偶数
-\end{cases}
-$$
+
+![](./images/lc338.png)
 
 ```python
 class Solution:
