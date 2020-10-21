@@ -612,3 +612,24 @@ class Solution:
 * 异或运算满足交换律和结合律
 
 对数组中所有元素进行异或运算，结果就是那个唯一的元素
+
+
+# 48. 旋转图像
+[题目](https://leetcode-cn.com/problems/rotate-image/)
+```python
+class Solution:
+    def rotate(self, matrix):
+        n=len(matrix)
+        for i in range(n//2): #第一层，圈数，从外至内的圈数，奇数不用处理，因为中间一个元素不用旋转
+            for j in range(i, n-i-1): #第二层，需要旋转的元素index，具体见图
+                num=matrix[n-1-j][i] #左下角->num
+                matrix[n-1-j][i]=matrix[n-1-i][n-1-j] #右下角->左下角
+                matrix[n-1-i][n-1-j]=matrix[j][n-1-i] #右上角->右下角
+                matrix[j][n-1-i]=matrix[i][j] #左上角->右上角
+                matrix[i][j]=num #num ->左上角
+```
+![](./images/lc48.png)
+
+每次都移动一个边，把边分成四部分，交互每个部分的元素即可
+
+(如果能用`numpy`的话就可以更方便，直接写出一个边框的交换的代码，让后用子矩阵递归就行了)
