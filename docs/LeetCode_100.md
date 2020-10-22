@@ -610,6 +610,7 @@ class Solution:
 
 # 48. 旋转图像
 [题目](https://leetcode-cn.com/problems/rotate-image/)
+## 两次迭代
 ```python
 class Solution:
     def rotate(self, matrix):
@@ -627,3 +628,19 @@ class Solution:
 每次都移动一个边，把边分成四部分，交互每个部分的元素即可
 
 (如果能用`numpy`的话就可以更方便，直接写出一个边框的交换的代码，让后用子矩阵递归就行了)
+
+# 96. 不同的二叉搜索树
+[题目](https://leetcode-cn.com/problems/unique-binary-search-trees/)
+
+## 卡特兰数
+```python
+class Solution:
+    def numTrees(self, n: int) -> int:
+        C=1
+        for i in range(n):
+            C*=2*(2*i+1)/(i+2)
+        return int(C)
+```
+[卡特兰数](https://baike.baidu.com/item/catalan/7605685?fr=aladdin)
+
+![](./images/lc96.png)
