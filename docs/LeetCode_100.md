@@ -644,3 +644,67 @@ class Solution:
 [卡特兰数](https://baike.baidu.com/item/catalan/7605685?fr=aladdin)
 
 ![](./images/lc96.png)
+
+
+# 208. 实现 Trie (前缀树)
+[题目](https://leetcode-cn.com/problems/implement-trie-prefix-tree/)
+## 利用字典实现
+```python
+class Trie:
+
+    def __init__(self):
+        """
+        Initialize your data structure here.
+        """
+        self.dirc={}
+
+
+    def insert(self, word: str) -> None:
+        """
+        Inserts a word into the trie.
+        """
+        tree=self.dirc
+        for c in word:
+            if c not in tree:
+                tree[c]={}
+            tree=tree[c]
+        tree["#"]="#"
+
+
+    def search(self, word: str) -> bool:
+        """
+        Returns if the word is in the trie.
+        """
+        tree=self.dirc
+        for c in word:
+            if c not in tree:
+                return False
+            tree=tree[c]
+        return  True if  "#" in tree else False
+
+
+    def startsWith(self, prefix: str) -> bool:
+        """
+        Returns if there is any word in the trie that starts with the given prefix.
+        """
+        tree=self.dirc
+        for c in prefix:
+            if c not in tree:
+                return False
+            tree=tree[c]
+        return True
+```
+
+参考自[题解](https://leetcode-cn.com/problems/implement-trie-prefix-tree/solution/pythonjian-dan-shi-xian-by-powcai/)
+
+实现方法如下：
+
+* 这里每个树节点都使用字典来表示，字典的键就是子节点的值，键的值就是字节点
+* 先建立一个根节点
+* 插入时，判断根节点是否有子节点值为第一个字母的，没有就创建一个新的键，键为该字母，其值为一个新的空节点（字典）；有的话就向下一个字母迭代，直至最后一个字母；最后把该节点的一个键值对设为一个特殊值，表示该节点可以作为最后一个节点
+* 查询时，迭代判断即可，要注意判断到最后时，检查节点是否能作为最后一个才行
+* 查询前缀和查询类似，只不过不需要判断检查最后一个节点
+
+实例：
+
+![](./images/lc208.jpg)
