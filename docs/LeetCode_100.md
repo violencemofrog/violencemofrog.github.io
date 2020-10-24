@@ -708,3 +708,24 @@ class Trie:
 实例：
 
 ![](./images/lc208.jpg)
+
+# 105. 从前序与中序遍历序列构造二叉树
+[题目](https://leetcode-cn.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/)
+
+# 递归
+
+```python
+class Solution:
+    def buildTree(self, preorder: List[int], inorder: List[int]) -> TreeNode:
+        if not preorder:
+            return None
+        root=TreeNode(preorder[0])
+        a=inorder.index(preorder[0])
+        root.left=self.buildTree(preorder[1:a+1],inorder[0:a])
+        root.right=self.buildTree(preorder[a+1:],inorder[a+1:])
+        return root
+```
+* 前序遍历的第一个一定是根节点
+* 从中序遍历中找到根节点（题目已经指明节点元素唯一），则左侧就是左子树的元素，右侧就是右子树的元素
+* 已知右子树的元素个数，且右子树的元素在前序遍历中是连续排列在数组最后的，所以很容易在前序遍历中找到左，右子树
+* 最后递归即可
