@@ -729,3 +729,48 @@ class Solution:
 * 从中序遍历中找到根节点（题目已经指明节点元素唯一），则左侧就是左子树的元素，右侧就是右子树的元素
 * 已知右子树的元素个数，且右子树的元素在前序遍历中是连续排列在数组最后的，所以很容易在前序遍历中找到左，右子树
 * 最后递归即可
+
+
+# 64. 最小路径和
+[题目](https://leetcode-cn.com/problems/minimum-path-sum/)
+
+## 动态规划
+```python
+class Solution:
+    def minPathSum(self, grid: List[List[int]]) -> int:
+        sum=grid.copy()
+        for i in range(len(grid)):
+            for j in range(len(grid[0])):
+                if i==j==0:
+                    continue
+                elif i==0:
+                    sum[i][j]=sum[i][j-1]+grid[i][j]
+                elif j==0:
+                    sum[i][j]=sum[i-1][j]+grid[i][j]
+                else:
+                    sum[i][j]=min(sum[i-1][j],sum[i][j-1])+grid[i][j]
+        return sum[-1][-1]
+```
+动态规划，再建立一个矩阵存储每个点距离左上角的最短距离即可
+
+# 406. 根据身高重建队列
+[题目](https://leetcode-cn.com/problems/queue-reconstruction-by-height/)
+
+## 贪心算法
+```python
+class Solution:
+    def reconstructQueue(self, people: List[List[int]]) -> List[List[int]]:
+        if len(people) <= 1:
+            return people
+        people = sorted(people, key = lambda x: (-x[0], x[1]))
+        new_people = [people[0]]
+        for i in people[1:]:
+            new_people.insert(i[1], i)
+        return new_people
+```
+来自[题解](https://leetcode-cn.com/problems/queue-reconstruction-by-height/solution/406gen-ju-shen-gao-zhong-jian-dui-lie-tan-xin-suan/)
+
+* 排序：
+  * 按高度降序排列。
+  * 在同一高度的人中，按 k 值的升序排列
+* 逐个地把它们放在输出队列中，索引等于它们的 k 值
