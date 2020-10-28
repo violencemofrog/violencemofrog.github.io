@@ -792,3 +792,36 @@ class Solution:
                     dp[i][j] = max(dp[i][j], dp[i][k] + dp[k][j] + points[i] * points[k] * points[j])
         return dp[0][-1]
 ```
+
+# 148. 排序链表
+[题目](https://leetcode-cn.com/problems/sort-list/)
+
+## 归并排序
+```python
+class Solution:
+    def sortList(self, head: ListNode) -> ListNode:
+        if not head or not head.next:
+            return head
+        
+        slow,fast=head,head.next
+        while fast and fast.next:
+            fast,slow=fast.next.next,slow.next
+        mid,slow.next= slow.next,None
+
+        left,right=self.sortList(head),self.sortList(mid)
+        h=res=ListNode()
+        while left and right:
+            if left.val < right.val:
+                h.next,left=left,left.next
+            else: 
+                h.next,right=right,right.next
+            h=h.next
+        h.next=left if left else right
+        return res.next
+```
+
+![](./images/lc148.png)
+
+* 先用快慢指针找到链表中点
+* 递归地分割链表
+* 递归地连接分割的链表（创建空的头节点，将两个子链表的每个节点按顺序连接）
