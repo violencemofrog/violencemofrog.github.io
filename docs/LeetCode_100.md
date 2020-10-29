@@ -825,3 +825,53 @@ class Solution:
 * 先用快慢指针找到链表中点
 * 递归地分割链表
 * 递归地连接分割的链表（创建空的头节点，将两个子链表的每个节点按顺序连接）
+
+# 287.寻找重复数
+[题目](https://leetcode-cn.com/problems/find-the-duplicate-number/)
+
+## 利用字典
+```python
+class Solution:
+    def findDuplicate(self, nums: List[int]) -> int:
+        d={}
+        for i in nums:
+            if str(i) in d:
+                d[str(i)]+=1
+            else:
+                d[str(i)]=1
+        for i,v in d.items():
+            if v>1:
+                return int(i)
+```
+
+利用字典存储每个数字出现的次数，输出出现次数大于1的数字即可
+
+
+## 快慢指针法
+```python
+class Solution:
+    def findDuplicate(self, nums: List[int]) -> int:
+        s,f=0,0
+        while True:
+            s=nums[s]
+            f=nums[nums[f]]
+            if f==s:
+                break
+        s=0
+        while True:
+            s=nums[s]
+            f=nums[f]
+            if f==s:
+                break
+        return s
+```
+类似于环形链表的找环节点的操作
+
+首先，由题干，数组长度为$n+1$，说明其索引范围为$0- n$，而且其元素范围已给定为$1-n$，所以每个元素的值都是一个有效的索引
+
+这可以理解为每个元素都指向了另一个元素，但是有的元素被多个元素所指向（同时也有元素没有被任何元素所指向），因此由元素的指向连接而成的链状结构是有环的，通过快慢指针就可以快速判断是否有环，即是否存在重复的元素
+
+
+确定存在环后（即快慢指针相遇后），把慢指针放于数组首，再进行一次循环，这一次快，慢指针速度一样，每次都移动一步，当二者再次相遇时，相遇处就是重复的元素
+
+
