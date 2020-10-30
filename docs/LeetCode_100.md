@@ -872,6 +872,31 @@ class Solution:
 这可以理解为每个元素都指向了另一个元素，但是有的元素被多个元素所指向（同时也有元素没有被任何元素所指向），因此由元素的指向连接而成的链状结构是有环的，通过快慢指针就可以快速判断是否有环，即是否存在重复的元素
 
 
-确定存在环后（即快慢指针相遇后），把慢指针放于数组首，再进行一次循环，这一次快，慢指针速度一样，每次都移动一步，当二者再次相遇时，相遇处就是重复的元素
+确定存在环后（即快慢指针相遇后），把慢指针放于数组首，再进行一次循环，这一次快，慢指针速度一样，每次都移动一步，当二者再次相遇时，相遇处就是重复的元素（其实很容易发现重复的元素就是环节点在链表结构中的前一个或后一个）
 
 
+# 236. 二叉树的最近公共祖先
+[题目](https://leetcode-cn.com/problems/lowest-common-ancestor-of-a-binary-tree/)
+
+## 递归
+```python
+class Solution:
+    def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
+        if not root or root == p or root == q: return root
+        left = self.lowestCommonAncestor(root.left, p, q)
+        right = self.lowestCommonAncestor(root.right, p, q)
+        if not left: 
+            return right
+        if not right: 
+            return left
+        return root
+```
+来自[题解](https://leetcode-cn.com/problems/lowest-common-ancestor-of-a-binary-tree/solution/236-er-cha-shu-de-zui-jin-gong-gong-zu-xian-hou-xu/)
+
+节点元素唯一，两个节点的关系如下：
+* 一：分别在最近公共祖先的左右子树里
+* 二：其中一个在另一个的子树里
+
+如果根节点和其中一个元素相等，那么返回这个节点（对应关系二）
+
+如果不等，则需要对左右子树分别递归判断
