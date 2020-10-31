@@ -900,3 +900,31 @@ class Solution:
 如果根节点和其中一个元素相等，那么返回这个节点（对应关系二）
 
 如果不等，则需要对左右子树分别递归判断
+
+
+# 739. 每日温度
+[题目](https://leetcode-cn.com/problems/daily-temperatures/)
+
+## 单调栈
+```python
+class Solution:
+    def dailyTemperatures(self, T: List[int]) -> List[int]:
+        stack=[]
+        res=T.copy()
+        for i in reversed(range(len(T))):
+            while len(stack) and T[stack[-1]]<=T[i]:
+                stack.pop()
+            res[i]=stack[-1]-i if len(stack) else 0
+            stack.append(i)
+        return res
+```
+
+维护一个栈，存储元素的下标，之后数组反向迭代
+
+如果栈为空，说明之后没有大于`T[i]`的元素，记`0`，同时 `i`进栈
+
+如果栈不为空：
+
+* 栈顶下标对应的元素大于`T[i]`，找到二者之差即为天数
+* 如果小于等于`T[i]`，不断弹栈，之后如果大于，按上一个方法计算天数；如果栈为空，则记`0`
+* `i`进栈

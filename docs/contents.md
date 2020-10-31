@@ -19,3 +19,4 @@
 
 # Numpy
 * [通过numpy.newaxis添加数组维度](./Blog/通过numpy.newaxis添加数组维度.md)
+* [numpy总结](https://nbviewer.jupyter.org/github/violencemofrog/violencemofrog.github.io/blob/main/docs/Blog/numpy_notes.ipynb)
