@@ -928,3 +928,80 @@ class Solution:
 * 栈顶下标对应的元素大于`T[i]`，找到二者之差即为天数
 * 如果小于等于`T[i]`，不断弹栈，之后如果大于，按上一个方法计算天数；如果栈为空，则记`0`
 * `i`进栈
+
+
+# 169. 多数元素
+[题目](https://leetcode-cn.com/problems/majority-element/)
+
+## 摩尔投票法
+```python
+class Solution:
+    def majorityElement(self, nums: List[int]) -> int:
+        cur=nums[0]
+        n=1
+        for i in nums[1:]:
+            if i==cur:
+                n+=1
+            else:
+                n-=1
+                if n==0:
+                    cur=i
+                    n=1
+        return cur
+```
+先保存第一个元素`cur`，对其出现次数计数为1
+
+迭代数组，当遇到的相同元素时，计数加1，当遇到不同元素时，计数减1
+
+当计数为0时，把`cur`设置为当前元素，同时计数再次为1
+
+# 21. 合并两个有序链表
+[题目](https://leetcode-cn.com/problems/merge-two-sorted-lists/)
+
+## 迭代法
+```python
+class Solution:
+    def mergeTwoLists(self, l1: ListNode, l2: ListNode) -> ListNode:
+        helper=ListNode()
+        end=helper
+        while l1 and l2:
+            if l1.val<l2.val:
+                end.next=l1
+                end=end.next
+                l1=l1.next
+            else:
+                end.next=l2
+                end=end.next
+                l2=l2.next
+        if not l1:
+            end.next=l2
+        elif not l2:
+            end.next=l1
+        else:
+            end.next=None
+        return helper.next
+```
+比较两链表的头，每次将小的那一个加入新的链表（原地地插入，不创建新节点）；当其中一个链表为空，直接将另一个接到新链表的尾段即可
+
+# 647. 回文子串
+[题目](https://leetcode-cn.com/problems/palindromic-substrings/)
+
+## 中心拓展法
+```python
+class Solution:
+    def countSubstrings(self, s: str) -> int:
+        n=0
+        def fun(i,j):
+            res=0
+            while i>=0 and j<len(s) and s[i]==s[j]:
+                i-=1
+                j+=1
+                res+=1
+            return res
+        for i in range(len(s)):
+            n+=fun(i,i)
+            n+=fun(i,i+1)
+        return n
+```
+
+指定回文子串中心，向两边拓展判断是否还能成为回文串（对中心分单个字符和两个字符两种情况分开判断）
