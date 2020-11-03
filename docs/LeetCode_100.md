@@ -1005,3 +1005,38 @@ class Solution:
 ```
 
 指定回文子串中心，向两边拓展判断是否还能成为回文串（对中心分单个字符和两个字符两种情况分开判断）
+
+
+# 215. 数组中的第K个最大元素
+[题目](https://leetcode-cn.com/problems/kth-largest-element-in-an-array/)
+
+## 堆
+```python
+class Solution:
+    def findKthLargest(self, nums: List[int], k: int) -> int:
+        return heapq.nlargest(k,nums)[-1]
+```
+利用Python的库函数，将数组变成堆，输出前n大的元素，找到第n个即可
+
+# 11. 盛最多水的容器
+[题目](https://leetcode-cn.com/problems/container-with-most-water/)
+
+## 双指针
+```python
+class Solution:
+    def maxArea(self, height: List[int]) -> int:
+        l=0
+        r=len(height)-1
+        max=0
+        while l<r:
+            cur=(r-l)*(height[r] if height[r]<height[l] else height[l])
+            max=cur if cur>max else max
+            if height[l]<height[r]:
+                l+=1
+            else:
+                r-=1
+        return max
+```
+记录最左边的index`l`和最右边的index`r`，计算这时对应的储水量，对比最大储水量并记录
+
+接下来，`l`和`r`对应的数组元素较小的那一个向内移动（如果移动较大的那个，则下一次计算的储水量肯定会减小，因为短板长度没变，但是水槽长度短了），直至`l`等于`r`
