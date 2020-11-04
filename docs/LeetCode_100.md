@@ -1040,3 +1040,25 @@ class Solution:
 记录最左边的index`l`和最右边的index`r`，计算这时对应的储水量，对比最大储水量并记录
 
 接下来，`l`和`r`对应的数组元素较小的那一个向内移动（如果移动较大的那个，则下一次计算的储水量肯定会减小，因为短板长度没变，但是水槽长度短了），直至`l`等于`r`
+
+
+# 49. 字母异位词分组
+[题目](https://leetcode-cn.com/problems/group-anagrams/)
+
+## 利用字典
+```python
+class Solution:
+    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+        dict={}
+        for item in strs:
+            key=tuple(sorted(item))
+            dict[key]=dict.get(key,[])+[item]
+        return list(dict.values())
+```
+来自[题解](https://leetcode-cn.com/problems/group-anagrams/solution/python3-99-by-meng-zhi-hen-n/)
+
+思路即用字典存储包含相同字母的单词
+
+判断单词的字母相同利用了元组和排序
+
+其中`dict.get`方法返回字典`dict`中`key`对应的值，如果找不到，返回第二个参数指定的值（这里为`[]`）
