@@ -1062,3 +1062,27 @@ class Solution:
 判断单词的字母相同利用了元组和排序
 
 其中`dict.get`方法返回字典`dict`中`key`对应的值，如果找不到，返回第二个参数指定的值（这里为`[]`）
+
+# 538. 把二叉搜索树转换为累加树
+[题目](https://leetcode-cn.com/problems/convert-bst-to-greater-tree/)
+
+## 反中序遍历
+```python
+class Solution:
+    def convertBST(self, root: TreeNode) -> TreeNode:
+        def dfs(root:TreeNode):
+            nonlocal total
+            if root:
+                dfs(root.right)
+                total+=root.val
+                root.val=total
+                dfs(root.left)
+        
+        total=0
+        dfs(root)
+        return root
+```
+
+来自[题解](https://leetcode-cn.com/problems/convert-bst-to-greater-tree/solution/ba-er-cha-sou-suo-shu-zhuan-huan-wei-lei-jia-sh-14/)
+
+二叉搜索树的中序遍历是递增的数列，而其反中序遍历是递减的数列；对树反向中序遍历，同时存储每个节点的`val`，遍历过程中更新节点的`val`即可
