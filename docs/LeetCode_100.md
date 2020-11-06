@@ -1086,3 +1086,39 @@ class Solution:
 来自[题解](https://leetcode-cn.com/problems/convert-bst-to-greater-tree/solution/ba-er-cha-sou-suo-shu-zhuan-huan-wei-lei-jia-sh-14/)
 
 二叉搜索树的中序遍历是递增的数列，而其反中序遍历是递减的数列；对树反向中序遍历，同时存储每个节点的`val`，遍历过程中更新节点的`val`即可
+
+
+# 102. 二叉树的层序遍历
+[题目](https://leetcode-cn.com/problems/binary-tree-level-order-traversal/)
+
+## 利用队列
+```python
+class Solution:
+    def levelOrder(self, root: TreeNode) -> List[List[int]]:
+        if not root:
+            return []
+
+        def fun(q,node):
+            if node:
+                q.append(node)
+
+        res = []
+        queue = deque()
+        queue.append(root)
+        while queue:
+            queue2 = deque()
+            nums = []
+            while queue:
+                node = queue.popleft()
+                nums.append(node.val)
+                fun(queue2, node.left)
+                fun(queue2, node.right)
+            queue = queue2
+            res.append(nums)
+        return res
+```
+建立一个空队列，把根节点入队
+
+当队列不空时，所有元素依次出队，这即为树的一层的所有节点；同时，建立一个新的队，把出队的元素的左右节点依次入队，并在结束时把改队元素赋予原来的队列
+
+该题目要求输出的元素保持树的层级结构，因此和普通的层序遍历相比，每次都要先出队一层的元素才行
