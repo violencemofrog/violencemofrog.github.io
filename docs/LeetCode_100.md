@@ -1122,3 +1122,137 @@ class Solution:
 当队列不空时，所有元素依次出队，这即为树的一层的所有节点；同时，建立一个新的队，把出队的元素的左右节点依次入队，并在结束时把改队元素赋予原来的队列
 
 该题目要求输出的元素保持树的层级结构，因此和普通的层序遍历相比，每次都要先出队一层的元素才行
+
+# 283. 移动零
+[题目](https://leetcode-cn.com/problems/move-zeroes/)
+
+## 直接删除
+```python
+class Solution:
+    def moveZeroes(self, nums: List[int]) -> None:
+        i=0
+        n=0
+        while i < len(nums):
+            if nums[i]:
+                i+=1
+            else:
+                del nums[i]
+                n+=1
+        for j in range(n):
+            nums.append(0)
+```
+删除所有0，同时统计其个数，最后在数组末尾添加
+
+## 双指针
+```python
+class Solution:
+    def moveZeroes(self, nums: List[int]) -> None:
+        """
+        Do not return anything, modify nums in-place instead.
+        """
+        idx_0 = 0
+
+        for idx, num in enumerate(nums):
+            if num == 0:
+                continue
+            
+            if idx_0 == idx:
+                idx_0 += 1
+                continue
+            
+
+            nums[idx_0] = num
+            nums[idx] = 0
+            idx_0 += 1
+```
+来自[题解](https://leetcode-cn.com/problems/move-zeroes/solution/python3-283ling-yi-dong-liang-chong-fang-fa-by-3wm/)
+
+记录当前循环的位置和最前面的非零位置到了数组哪里；当当前元素不为0，则将其与前面的0值交换；若为0，则继续循环找到不为0的元素
+
+# 62. 不同路径
+[题目](https://leetcode-cn.com/problems/unique-paths/)
+
+## 动态规划
+```python
+class Solution:
+    def uniquePaths(self, m: int, n: int) -> int:
+        mat=[[1]*m for i in range(n)]
+        for i in range(1,n):
+            for j in range(1,m):
+                mat[i][j]=mat[i][j-1]+mat[i-1][j]
+        return mat[-1][-1]
+```
+经典的路径条数计算问题，到达每个点的路径数目等于到达上方点和左边点的路径数目之和
+
+## 动态规划（空间复杂度O(n)）
+```python
+class Solution:
+    def uniquePaths(self, m: int, n: int) -> int:
+        cur = [1] * n
+        for i in range(1, m):
+            for j in range(1, n):
+                cur[j] += cur[j-1]
+        return cur[-1]
+```
+来自[题解](https://leetcode-cn.com/problems/unique-paths/solution/dong-tai-gui-hua-by-powcai-2/)，用一行来代替原来的矩阵
+
+# 347. 前 K 个高频元素
+[题目](https://leetcode-cn.com/problems/top-k-frequent-elements/)
+
+## 字典+排序
+```python
+class Solution:
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        d={}
+        for i in nums:
+            d[i]=d.get(i,0)+1
+        l=list(d.items())
+        l.sort(key=lambda x:x[1],reverse=True)
+        res=[]
+        for i in range(k):
+            res.append(l[i][0])
+        return res
+```
+先用字典统计出现次数，在转成列表，根据第二个参数排序，输出前k个即可
+
+
+# 448. 找到所有数组中消失的数字
+[题目](https://leetcode-cn.com/problems/find-all-numbers-disappeared-in-an-array/)
+
+## 原地修改数组
+```python
+class Solution:
+    def findDisappearedNumbers(self, nums: List[int]) -> List[int]:
+        for i in range(len(nums)):
+            nums[abs(nums[i])-1]=-1*abs(nums[abs(nums[i])-1])
+        res=[]
+        for i in range(len(nums)):
+            if nums[i]>0:
+                res.append(i+1)
+        return res
+```
+由题目的条件，可知数组中的最大的元素值不超过数组的长度，因此为找到缺失值，我们可以利用索引建立一个隐式的哈希表，思路如下：
+
+* 先遍历数组，对于遍历到的元素`i`，使`abs(i)-1`索引处的元素变为负数（仅改变一次）
+* 遍历结束后，有的元素变为负数，说明其索引对应的那个元素出现了，而没变负数的元素，其索引对应的元素未出现
+* 再次遍历数组，找到未出现的元素
+
+# 337. 打家劫舍 III
+[题目](https://leetcode-cn.com/problems/house-robber-iii/)
+
+## 递归
+```python
+class Solution:
+    def rob(self, root: TreeNode) -> int:
+        def fun(root: TreeNode) -> (int,int):
+            if not root:
+                return 0, 0
+            left_n,left_r=fun(root.left)
+            right_n,right_r=fun(root.right)
+            return max(left_n,left_r)+max(right_n,right_r),left_n+right_n+root.val 
+        return max(fun(root))
+```
+递归思路如下：
+
+* 如果当前节点打劫，则其子节点不打劫；该点的总收入为该节点的金额+不打劫子节点的最大收入
+* 若不打劫当前节点，则子节点可打劫可不打劫；该点的总收入为子节点的最大收入（可打劫可不打劫）
