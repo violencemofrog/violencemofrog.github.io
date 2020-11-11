@@ -20,3 +20,6 @@
 # Numpy
 * [通过numpy.newaxis添加数组维度](./Blog/通过numpy.newaxis添加数组维度.md)
 * [numpy总结](https://nbviewer.jupyter.org/github/violencemofrog/violencemofrog.github.io/blob/main/docs/Blog/numpy_notes.ipynb)
+
+# 算法
+* [二分查找的三种情况](./Blog/二分查找的三种情况.md)
